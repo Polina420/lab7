@@ -2,8 +2,8 @@
 #include <fstream>
 using namespace std;
 
-void key(int A[5][5]) {
-    cout << "Введите матрицу А" << endl;     //ввод матрицы А с кравиатуры//
+void key(int A[5][5]) {                     //ввод матрицы А с кравиатуры
+    cout << "Введите матрицу А" << endl;     
 
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
@@ -16,29 +16,30 @@ void key(int A[5][5]) {
 
 void fl(int A[5][5]) {  
     char ch;                                          //заполнение массива из файла
-    string path = "myFile.txt";
     ifstream fin;
-    fin.open(path);
+    fin.open("text.txt");
 
     
-    if (!fin.is_open()) {
+    if (!fin.is_open()) 
         cout << "Ошибка открытия файла" << endl;
-    }
     else {
         cout << "Файл открыт!" << endl;
-        
+
+     
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                    while (fin.get(ch)) {
-                        A[i][j] = ch;
+                fin >> A[i][j];
+                        
                 }
             }
         }
-        
+   
+        fin.close();
     }
-}
+    
 
-void vx(int A[5][5],int X[5]) {
+
+void vx(int A[5][5],int X[5]) {             //вычисление х
     int minM = A[0][0], minS;
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
@@ -60,33 +61,39 @@ void vx(int A[5][5],int X[5]) {
         else {
             X[i] = -1;
         }
-    }                                      //вычисление х//
+    }                                      
 }
 
-void outM(int X[5],int A[5][5]) {
+void outM(int X[5],int A[5][5]) {               //вывод исходного и результирующего массива на экран и в файл
+    ofstream file;
+    file.open("textfile.txt");
     cout << "\nИсходный массив А: \n";
     for (int i = 0; i < 5; i++) {
         cout << "\n";
         for (int j = 0; j < 5; j++) {
             cout << A[i][j] << " ";
+            file << A[i][j] << " ";
         }
     }    cout << endl;
-    cout << "Результирующий массив Х: {" << endl;
+    cout << "Результирующий массив Х: " << endl;
     for (int i = 0; i < 5; i++) {
         cout << " " << X[i];
-    }                                                            //вывод исходного и результирующего массива на экран и в файл//
+        file << " " << X[i];
+    }                       
+    file.close();                                
 }
 
 int rekY(int a,int A[5][5],int Y) {                       //вычесление у через рекурсивную функцию
     if (a > 4)
         return Y;
-    a++;
+   
     if (!(A[0][a] % 2) == 0) {
-        while (A[0][a + 1] % 2 == 0) {
+        while ((A[0][a + 1] % 2) == 0) {
             Y = Y + A[0][a + 1];
                 a++;
         }
     }
+    a++;
     return rekY(a,A,Y);
 }
 
@@ -106,5 +113,6 @@ int main()
     vx(A,X);
     outM(X,A);
     rekY(a,A,Y);
+    cout <<"\nY= " <<rekY(a,A,Y) << endl;
 }
 
