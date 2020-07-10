@@ -80,7 +80,8 @@ void outM(int X[5],int A[5][5]) {               //вывод исходного 
         cout << " " << X[i];
         file << " " << X[i];
     }                       
-    file.close();                                
+    file.close();      
+    cout << "Сегодня хороший день!" << endl;
 }
 
 int rekY(int a,int A[5][5],int Y) {                       //вычесление у через рекурсивную функцию
